@@ -5,6 +5,7 @@ terraform {
         encrypt = "true"
         key = "AWS/Dev/terraform-remote-states/terraform.tfstate"
         region = "eu-north-1"
+        dynamodb_table = "terraform_state_aws_eu_north_1"
     }
     required_providers {
         aws = {
