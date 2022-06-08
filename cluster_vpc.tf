@@ -1,6 +1,6 @@
 locals {
   name   = "ex-${replace(basename(path.cwd), "_", "-")}"
-  region = "eu-west-1"
+  region = "eu-north-1"
 
   tags = {
     Example    = local.name
@@ -14,7 +14,8 @@ locals {
 ################################################################################
 
 module "eks" {
-  source = "https://github.com/terraform-aws-modules/terraform-aws-eks"
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 18.0"
 
   cluster_name                    = local.name
   cluster_endpoint_private_access = true
@@ -85,7 +86,7 @@ module "eks" {
     green = {
       min_size     = 1
       max_size     = 2
-      desired_size = 2
+      desired_size = 1
 
       instance_types = ["t3.micro"]
       capacity_type  = "SPOT"
@@ -114,42 +115,42 @@ module "eks" {
   }
 
   # Fargate Profile(s)
-  fargate_profiles = {
-    default = {
-      name = "default"
-      selectors = [
-        {
-          namespace = "kube-system"
-          labels = {
-            k8s-app = "kube-dns"
-          }
-        },
-        {
-          namespace = "default"
-        }
-      ]
+#   fargate_profiles = {
+#     default = {
+#       name = "default"
+#       selectors = [
+#         {
+#           namespace = "kube-system"
+#           labels = {
+#             k8s-app = "kube-dns"
+#           }
+#         },
+#         {
+#           namespace = "default"
+#         }
+#       ]
 
-      tags = {
-        Owner = "test"
-      }
+#       tags = {
+#         Owner = "test"
+#       }
 
-      timeouts = {
-        create = "20m"
-        delete = "20m"
-      }
-    }
-  }
+#       timeouts = {
+#         create = "20m"
+#         delete = "20m"
+#       }
+#     }
+#   }
 
   # aws-auth configmap
-  manage_aws_auth_configmap = true
+  manage_aws_auth_configmap = false
 
-  aws_auth_node_iam_role_arns_non_windows = [
-    module.eks_managed_node_group.iam_role_arn,
-    module.self_managed_node_group.iam_role_arn,
-  ]
-  aws_auth_fargate_profile_pod_execution_role_arns = [
-    module.fargate_profile.fargate_profile_pod_execution_role_arn
-  ]
+#   aws_auth_node_iam_role_arns_non_windows = [
+#     module.eks_managed_node_group.iam_role_arn,
+#     module.self_managed_node_group.iam_role_arn,
+#   ]
+#   aws_auth_fargate_profile_pod_execution_role_arns = [
+#     module.fargate_profile.fargate_profile_pod_execution_role_arn
+#   ]
 
   aws_auth_roles = [
     {
