@@ -10,27 +10,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.20.0"
+      version = ">= 3.72"
     }
-
-    random = {
-      source  = "hashicorp/random"
-      version = "3.1.0"
-    }
-
-    local = {
-      source  = "hashicorp/local"
-      version = "2.1.0"
-    }
-
-    null = {
-      source  = "hashicorp/null"
-      version = "3.1.0"
-    }
-
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2.0.1"
+      version = ">= 2.10"
     }
   }
   required_version = ">= 0.13"
@@ -40,4 +24,15 @@ provider "aws" {
   shared_credentials_file = "~/.aws/credentials"
   profile                 = "terraformuser"
   region                  = "eu-north-1"
+}
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1alpha1"
+    command     = "aws"
+    # This requires the awscli to be installed locally where Terraform is executed
+    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_id]
+  }
 }
