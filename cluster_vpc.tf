@@ -71,34 +71,34 @@ module "eks" {
     }
   }
 
-  # Self Managed Node Group(s)
-  self_managed_node_group_defaults = {
-    vpc_security_group_ids       = [aws_security_group.additional.id]
-    iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
-  }
+  #   # Self Managed Node Group(s)
+  #   self_managed_node_group_defaults = {
+  #     vpc_security_group_ids       = [aws_security_group.additional.id]
+  #     iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
+  #   }
 
-  self_managed_node_groups = {
-    spot = {
-      instance_type = "m5.large"
-      instance_market_options = {
-        market_type = "spot"
-      }
+  #   self_managed_node_groups = {
+  #     spot = {
+  #       instance_type = "m5.large"
+  #       instance_market_options = {
+  #         market_type = "spot"
+  #       }
 
-      pre_bootstrap_user_data = <<-EOT
-      echo "foo"
-      export FOO=bar
-      EOT
+  #       pre_bootstrap_user_data = <<-EOT
+  #       echo "foo"
+  #       export FOO=bar
+  #       EOT
 
-      bootstrap_extra_args = "--kubelet-extra-args '--node-labels=node.kubernetes.io/lifecycle=spot'"
+  #       bootstrap_extra_args = "--kubelet-extra-args '--node-labels=node.kubernetes.io/lifecycle=spot'"
 
-      post_bootstrap_user_data = <<-EOT
-      cd /tmp
-      sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
-      sudo systemctl enable amazon-ssm-agent
-      sudo systemctl start amazon-ssm-agent
-      EOT
-    }
-  }
+  #       post_bootstrap_user_data = <<-EOT
+  #       cd /tmp
+  #       sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+  #       sudo systemctl enable amazon-ssm-agent
+  #       sudo systemctl start amazon-ssm-agent
+  #       EOT
+  #     }
+  #   }
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
@@ -355,4 +355,9 @@ resource "aws_kms_key" "eks" {
   enable_key_rotation     = true
 
   tags = local.tags
+}
+
+output "cluster_id" {
+  description = "The name/id of the EKS cluster. Will block on cluster creation until the cluster is really ready"
+  value       = module.eks.cluster_id
 }
