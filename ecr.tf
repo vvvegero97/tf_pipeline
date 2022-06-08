@@ -1,20 +1,3 @@
-# module "ecr" {
-#     source = "github.com/byu-oit/terraform-aws-ecr?ref=v2.0.1"
-#     name = "vegero-example-ecr"
-# }
-
-# output "repository" {
-#     value = module.ecr.repository
-# }
-
-# output "lifecycle_policy" {
-#     value = module.ecr.lifecycle_policy
-# }
-
-# output "repository_policy" {
-#     value = module.ecr.repository_policy
-# }
-################################################################
 resource "aws_ecr_repository" "ecr" {
     name = "vegero-example-ecr"
 
