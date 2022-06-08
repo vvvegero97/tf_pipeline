@@ -1,27 +1,3 @@
-# module "vpc" {
-#     source = "terraform-aws-modules/vpc/aws"
-#     version = "3.0.0"
-
-#     name = "Terraform-vpc"
-#     cidr = "10.1.0.0/16"
-#     azs = ["eu-north-1a", "eu-north-1b"]
-#     private_subnets = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
-#     public_subnets = ["10.1.101.0/24", "10.1.102.0/24", "10.1.103.0/24"]
-#     private_subnet_tags = {
-#       "kubernetes.io/role/internal-elb" = "1"
-#       "kubernetes.io/cluster/mydemocluster" = "owned"
-#     }
-#     public_subnet_tags = {
-#       "kubernetes.io/role/elb" = "1"
-#       "kubernetes.io/cluster/mydemocluster" = "owned"
-#     }
-    
-# }
-
-# resource "aws_internet_gateway" "igw" {
-#     vpc_id = module.vpc.default_vpc_id
-# }
-
 variable "region" {
   default     = "eu-north-1"
   description = "AWS region"
@@ -69,3 +45,27 @@ module "vpc" {
     "kubernetes.io/role/internal-elb"             = "1"
   }
 }
+##################################################################################
+# module "vpc" {
+#     source = "terraform-aws-modules/vpc/aws"
+#     version = "3.0.0"
+
+#     name = "Terraform-vpc"
+#     cidr = "10.1.0.0/16"
+#     azs = ["eu-north-1a", "eu-north-1b"]
+#     private_subnets = ["10.1.1.0/24", "10.1.2.0/24", "10.1.3.0/24"]
+#     public_subnets = ["10.1.101.0/24", "10.1.102.0/24", "10.1.103.0/24"]
+#     private_subnet_tags = {
+#       "kubernetes.io/role/internal-elb" = "1"
+#       "kubernetes.io/cluster/mydemocluster" = "owned"
+#     }
+#     public_subnet_tags = {
+#       "kubernetes.io/role/elb" = "1"
+#       "kubernetes.io/cluster/mydemocluster" = "owned"
+#     }
+
+# }
+
+# resource "aws_internet_gateway" "igw" {
+#     vpc_id = module.vpc.default_vpc_id
+# }
