@@ -1,11 +1,3 @@
-resource "aws_ecr_repository" "ecr" {
-  name = "vegero-example-ecr"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
-
 output "repo_name" {
   description = "Repository name: "
   value       = aws_ecr_repository.ecr.name
