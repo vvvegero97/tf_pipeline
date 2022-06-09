@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
     profile        = "terraformuser"
-    bucket         = var.bucket_name
+    bucket         = "vegero-tfstate-bucket"
     encrypt        = true
     key            = "AWS/Dev/terraform-remote-states/eu-north-1/Networking/VPC/terraform.tfstate"
-    region         = var.region
-    dynamodb_table = var.dynamodb_table
+    region         = "eu-north-1"
+    dynamodb_table = "terraform_state_aws_eu_north_1"
   }
   required_providers {
     aws = {

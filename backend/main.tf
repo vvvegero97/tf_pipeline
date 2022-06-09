@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
     profile        = "terraformuser"
-    bucket         = var.state_bucket
+    bucket         = "vegero-tfstate-bucket"
     encrypt        = true
     key            = "AWS/Dev/terraform-remote-states/backend/terraform.tfstate"
-    region         = var.aws_region
-    dynamodb_table = var.dynamodb_table
+    region         = "eu-north-1"
+    dynamodb_table = "terraform_state_aws_eu_north_1"
   }
   required_providers {
     aws = {
@@ -17,8 +17,9 @@ terraform {
 }
 
 provider "aws" {
-  profile = "terraformuser"
-  region  = var.aws_region
+  shared_credentials_file = "~/.aws/credentials"
+  profile                 = "terraformuser"
+  region                  = var.aws_region
   default_tags {
     tags = {
       "TerminationDate" = "Permanent",

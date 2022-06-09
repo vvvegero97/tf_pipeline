@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
     profile        = "terraformuser"
-    bucket         = var.bucket_name
+    bucket         = "vegero-tfstate-bucket"
     encrypt        = true
     key            = "AWS/Dev/terraform-remote-states/eu-north-1/K8S/EKS_clusters/terraform.tfstate"
-    region         = var.region
-    dynamodb_table = var.dynamodb_table
+    region         = "eu-north-1"
+    dynamodb_table = "terraform_state_aws_eu_north_1"
   }
   required_providers {
     aws = {
@@ -23,15 +23,17 @@ terraform {
 provider "aws" {
   # shared_credentials_file = "~/.aws/credentials"
   profile = "terraformuser"
-  region  = var.region
-  tags = {
-    "Termination date" = "Permanent"
-    "Environment"      = "Development"
-    "Team"             = "DevOps"
-    "DeployedBy"       = "Terraformm"
-    "Description"      = "For Geberal Purposes"
-    "OwnerEmail"       = "devops@example.com"
-    "Type"             = "EKS K8S Cluster"
+  region  = "eu-north-1"
+  default_tags {
+    tags = {
+      "Termination date" = "Permanent"
+      "Environment"      = "Development"
+      "Team"             = "DevOps"
+      "DeployedBy"       = "Terraformm"
+      "Description"      = "For Geberal Purposes"
+      "OwnerEmail"       = "devops@example.com"
+      "Type"             = "EKS K8S Cluster"
+    }
   }
 }
 
@@ -190,11 +192,13 @@ module "eks" {
   tags = local.tags
 
 
-  resource "aws_kms_key" "eks" {
-    description             = "EKS Secret Encryption Key"
-    deletion_window_in_days = 7
-    enable_key_rotation     = true
 
-    tags = local.tags
-  }
+}
+
+resource "aws_kms_key" "eks" {
+  description             = "EKS Secret Encryption Key"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+
+  tags = local.tags
 }
