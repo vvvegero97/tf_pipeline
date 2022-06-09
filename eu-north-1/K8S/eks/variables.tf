@@ -19,11 +19,11 @@ variable "dynamodb_table" {
 variable "vpc_bucket" {
   type        = string
   description = "VPC Remote State File Path"
-  default     = "AWS/Dev/terraform-remote-states/Networking/VPC/terraform.tfstate"
+  default     = "AWS/Dev/terraform-remote-states/eu-north-1/Networking/VPC/terraform.tfstate"
 }
 
 variable "sg_bucket" {
   type        = string
   description = "SG Remote State File Path"
-  default     = "AWS/Dev/terraform-remote-states/Networking/SG/terraform.tfstate"
+  default     = "AWS/Dev/terraform-remote-states/eu-north-1/Networking/SG/terraform.tfstate"
 }

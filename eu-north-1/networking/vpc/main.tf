@@ -3,7 +3,7 @@ terraform {
     profile        = "terraformuser"
     bucket         = var.bucket_name
     encrypt        = true
-    key            = "AWS/Dev/terraform-remote-states/Networking/VPC/terraform.tfstate"
+    key            = "AWS/Dev/terraform-remote-states/eu-north-1/Networking/VPC/terraform.tfstate"
     region         = var.region
     dynamodb_table = var.dynamodb_table
   }

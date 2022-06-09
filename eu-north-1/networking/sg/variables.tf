@@ -15,3 +15,9 @@ variable "dynamodb_table" {
   description = "DynamoDB Table for State Lock"
   default     = "terraform_state_aws_eu_north_1"
 }
+
+variable "vpc_bucket" {
+  type        = string
+  description = "VPC tfstate Path"
+  default     = "AWS/Dev/terraform-remote-states/eu-north-1/Networking/VPC/terraform.tfstate"
+}
