@@ -18,8 +18,8 @@ terraform {
 
 provider "aws" {
   #shared_credentials_file = "~/.aws/credentials"
-  profile                 = "terraformuser"
-  region                  = var.aws_region
+  profile = "terraformuser"
+  region  = var.aws_region
   default_tags {
     tags = {
       "TerminationDate" = "Permanent",
