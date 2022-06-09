@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     profile        = "terraformuser"
     bucket         = var.bucket_name
-    encrypt        = "true"
+    encrypt        = true
     key            = "AWS/Dev/terraform-remote-states/K8S/ACR/terraform.tfstate"
     region         = var.region
     dynamodb_table = var.dynamodb_table

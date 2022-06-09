@@ -1,10 +1,11 @@
 terraform {
   backend "s3" {
+    profile        = "terraformuser"
     bucket         = var.state_bucket
+    encrypt        = true
     key            = "AWS/Dev/terraform-remote-states/backend/terraform.tfstate"
     region         = var.aws_region
     dynamodb_table = var.dynamodb_table
-    encrypt        = true
   }
   required_providers {
     aws = {
@@ -16,7 +17,8 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  profile = "terraformuser"
+  region  = var.aws_region
   default_tags {
     tags = {
       "TerminationDate" = "Permanent",
