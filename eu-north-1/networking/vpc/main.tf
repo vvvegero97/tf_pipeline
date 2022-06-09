@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    profile        = "terraformuser"
+    #profile        = "terraformuser"
     bucket         = "vegero-tfstate-bucket"
     encrypt        = true
     key            = "AWS/Dev/terraform-remote-states/eu-north-1/Networking/VPC/terraform.tfstate"
@@ -18,8 +18,8 @@ terraform {
 
 provider "aws" {
   # shared_credentials_file = "~/.aws/credentials"
-  profile = "terraformuser"
-  region  = var.region
+  #profile = "terraformuser"
+  region = var.region
   default_tags {
     tags = {
       "Termination date" = "Permanent"
