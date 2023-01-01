@@ -1,16 +1,18 @@
 name: "Terraform CI/CD Backend"
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "backend/**"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "backend/**"
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - "backend/**"
+#   pull_request:
+#     branches:
+#       - main
+#     paths:
+#       - "backend/**"
+    workflow_dispatch:
+      
 
 jobs:
   terraform:
